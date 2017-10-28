@@ -1,12 +1,12 @@
 CC				= g++
 DEBUG			= gdb
-CFLAGS			= -g -Wall
+CFLAGS			= -g -Wall -std=c++11
 SRC_DIR			= src
 BIN_DIR 		= bin
 OBJ_DIR			= obj
 
 FINAL_EXEC		= prog
-SRCS 			= main.cpp etudiant.cpp table.cpp element.cpp 
+SRCS 			= main.cpp element.cpp etudiant.cpp table.cpp   
 									#rajouter ici les fichiers dépendances
 
 
@@ -28,3 +28,4 @@ veryclean: clean
 
 re: veryclean all
 
+ 

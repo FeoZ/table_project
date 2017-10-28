@@ -6,5 +6,6 @@
 using namespace std;
 
 int main(){
+	Etudiant a; 
 	return 0;
 }
