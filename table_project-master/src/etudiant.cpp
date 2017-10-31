@@ -12,23 +12,6 @@ Etudiant::Etudiant()
 }
 
 Etudiant::~Etudiant(){
-	// if(ad != NULL)
-	// {
-	// 	Cell* temp = ad;
-	// 	Cell* temp2; 
-
-	// 	while(temp->suivant != NULL)
-	// 	{
-	// 		temp2 = temp->suivant;
-	// 		delete temp;
-	// 		temp = temp2; 
-	// 	}
-
-	// 	delete temp; 
-
-	// }
-
-	// delete Cell; 
 
 	if(suiv != NULL)
 		{
@@ -118,7 +101,22 @@ Etudiant& Etudiant::operator=(const Etudiant& etu)
 
 void Etudiant::setSuiv(Etudiant etu)
 {
-	suiv = new Etudiant (etu.getNum(), etu.getAge());
+	if(suiv == NULL)
+	{
+		suiv = new Etudiant (etu.getNum(), etu.getAge());		
+	}
+	else
+	{
+		Etudiant* temp = suiv; 
+
+		while(temp->suiv != NULL)
+		{
+			temp = temp->suiv;
+		}
+
+		temp->suiv = new Etudiant (etu.getNum(), etu.getAge());
+
+	}
 }
 
 void Etudiant::setAge(unsigned int i)

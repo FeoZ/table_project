@@ -67,6 +67,7 @@ void Table::ajoute(Elem &e) ///// A MODIFIER EN UTILISANT POINTEUR SUR FT POUR H
 
 	if(tab[i].getOcc())
 	{
+
 		cout<<"rip"<<endl;   /////// ici que ça bug, j'ai essayé de faire une liste chainée assez bizarre 
 		tab[i].setSuiv(e);  /////// nsm, on verra plus tard
 	}
