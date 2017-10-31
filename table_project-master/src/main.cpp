@@ -6,13 +6,16 @@
 using namespace std;
 
 int main(){
-	// Etudiant a, b;
-	// a.remp_etu();
-	// b = a; 
-	// cout<<b;
-	// Table tab; 
-	// tab.ajoute(a);
-	// tab.affiche_tab(); 
+
+	// Etudiant a (1231, 12);
+	// Etudiant b (1331, 12);
+
+	// a.setSuiv(b);
+
+	// cout<<*a.getSuiv()<<endl;  
+
+
+
 	Table a; 
 	a.rempTab();
 	a.affiche_tab(); 

@@ -30,6 +30,20 @@ Etudiant::~Etudiant(){
 
 	// delete Cell; 
 
+	if(suiv != NULL)
+		{
+			Etudiant* temp = suiv;
+			Etudiant* temp2;
+
+			while(temp->suiv != NULL)
+			{
+				temp2 = temp->suiv; 
+				delete temp; 
+				temp = temp2;
+			}
+			delete temp;
+		}
+
 }
 
 Etudiant::Etudiant(const Etudiant& e)
@@ -44,6 +58,8 @@ Etudiant::Etudiant(unsigned int a, unsigned int b)
 {
 	num = a; 
 	age = b;
+	occ = true;
+	suiv = NULL; 
 }
 
 
@@ -89,7 +105,7 @@ void Etudiant::remp_etu()
 }
 
 
-Etudiant Etudiant::operator=(Etudiant const& etu)
+Etudiant& Etudiant::operator=(const Etudiant& etu)
 {
 	num = etu.getNum();
 	age = etu.getAge();
@@ -102,7 +118,7 @@ Etudiant Etudiant::operator=(Etudiant const& etu)
 
 void Etudiant::setSuiv(Etudiant etu)
 {
-	*suiv = etu;
+	suiv = new Etudiant (etu.getNum(), etu.getAge());
 }
 
 void Etudiant::setAge(unsigned int i)

@@ -43,9 +43,11 @@ void Table::affiche_tab() const //A MODIFIER POUR AFF LA LISTE DERRIERE
 		if(tab[i].getOcc())
 		{
 			std::cout<<"Case : "<<i<<" :"<<std::endl<<tab[i]<<std::endl; 
-			while(tab[i].getSuiv() != NULL)
+			Etudiant* temp = tab[i].getSuiv();
+			while(temp != NULL)
 			{
-				std::cout<<tab[i].getSuiv()<<std::endl; 
+				std::cout<<*temp<<std::endl;
+				temp = temp->getSuiv(); 
 			}
 			std::cout<<std::endl;
 		}
@@ -70,7 +72,8 @@ void Table::ajoute(Elem &e) ///// A MODIFIER EN UTILISANT POINTEUR SUR FT POUR H
 	}
 	else
 	{
-		tab[i] = e; 		
+		tab[i] = e; 	
+		cout<<tab[i]<<endl;	
 	}
 
 	std::cout<<"done"<<std::endl; 

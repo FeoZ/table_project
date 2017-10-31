@@ -31,7 +31,7 @@ public:
 
 	friend bool operator==(Etudiant const& lhs,Etudiant const& rhs); 	
 
-	Etudiant operator=(Etudiant const& etu);
+	Etudiant& operator=(const Etudiant& etu);
 
 	friend std::ostream &operator<<(std::ostream &flux, Etudiant const& etu);
 
