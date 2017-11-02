@@ -71,18 +71,20 @@ bool Table::recherche(const Elem& e) const // A AMELIORER, temps linéaire et no
 				temp = temp->getSuiv(); 
 				if(temp->getNum() == cle)
 				{
+					cout<<"L'etudiant existe deja!"<<endl;
 					return true; 
 				}
 			}
 			if(tab[i].getNum() == cle)
 			{
+				cout<<"L'etudiant existe deja!"<<endl;
 				return true; 
 			} 
 		}
 
 	}
 
-	cout<<"L'eudiant existe deja!"<<endl; 
+	cout<<"L'etudiant n'existe pas"<<endl; 
 	return false; 
 } 	
 
