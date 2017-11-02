@@ -10,6 +10,8 @@ private:
 	unsigned int (Table::*fonctHach)(Elem);
 	void (Table::*fonctReHach)(Elem&); 
 
+	unsigned int nbEssais;
+
 
 public:
 
@@ -25,11 +27,11 @@ public:
 
 //============== fonctionalités
 
-	Elem recherche(const Elem e) const;  // recherche dans la table un Element et indique sa position
+	bool recherche(const Elem& e) const;  // recherche dans la table un Element et indique s'il existe
 
 	void affiche_tab() const; 
 
-	//void ajoute(Elem &e);  // doit pouvoir demander quelle fonction de hachage utiliser à l'utilisateur 
+	void ajoute(Elem &e);  // doit pouvoir demander quelle fonction de hachage utiliser à l'utilisateur 
 
 //========== ft(s) hachage
 

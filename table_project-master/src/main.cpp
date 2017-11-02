@@ -7,10 +7,21 @@ using namespace std;
 
 int main(){
 
+	Etudiant v (111100, 23); 
 
-	Table a; 
-	a.rempTab();
-	a.affiche_tab(); 
+	Etudiant b (1112300, 43); 
+
+	Table a;
+
+	a.ajoute(v);
+	a.ajoute(b);
+
+	a.affiche_tab();
+
+
+
+
+
 
 	return 0;
 }

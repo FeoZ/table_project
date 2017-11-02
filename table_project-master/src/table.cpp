@@ -12,6 +12,7 @@ Table::Table()
 {
 	tab = new Elem[Taille];
 	demande();
+	nbEssais = 0;
 }
 
 Table::~Table()
@@ -33,7 +34,7 @@ void Table::demande()
 
 	do{
 	cout<<"Choisissez quelle gestion des collisions utiliser"<<endl;
-	cout<<"1 pour destion des collisions par liste"<<endl;
+	cout<<"1 pour gestion des collisions par liste"<<endl;
 	cout<<"2 pour gestion des collisions par re-hachage linéaire"<<endl; 
 	cout<<"3 pour gestion des collisions par re-hachage quadratique"<<endl;
 	cout<<"4 pour gestion des collisions par double hachage"<<endl;
@@ -53,14 +54,51 @@ unsigned int Table::ft_hach_1(Elem etu)
 }
 
 
-Elem Table::recherche(const Elem e) const
+bool Table::recherche(const Elem& e) const // A AMELIORER, temps linéaire et non constant
 {
-	return e; 
+	unsigned int cle = e.getNum(); 
+	unsigned int i; 
+	
+	Etudiant* temp;
+
+	for(i = 0; i < Taille; i++)
+	{
+		if(tab[i].getOcc())
+		{
+			temp = tab[i].getSuiv();
+			while(temp != NULL)
+			{
+				temp = temp->getSuiv(); 
+				if(temp->getNum() == cle)
+				{
+					return true; 
+				}
+			}
+			if(tab[i].getNum() == cle)
+			{
+				return true; 
+			} 
+		}
+
+	}
+
+	cout<<"L'eudiant existe deja!"<<endl; 
+	return false; 
 } 	
+
+void Table::ajoute(Elem &e) 
+{
+	if(!recherche(e))
+	{
+		(this->*fonctReHach)(e);	
+	}
+}
+
 
 void Table::affiche_tab() const //A MODIFIER POUR AFF LA LISTE DERRIERE
 {
 	unsigned int i;
+	Etudiant* temp;
 
 	std::cout<<"========================================================"<<endl; 
 	std::cout<<"			TABLEAU								"<<endl;
@@ -71,7 +109,7 @@ void Table::affiche_tab() const //A MODIFIER POUR AFF LA LISTE DERRIERE
 		if(tab[i].getOcc())
 		{
 			std::cout<<"Case : "<<i<<" :"<<std::endl<<tab[i]<<std::endl; 
-			Etudiant* temp = tab[i].getSuiv();
+			temp = tab[i].getSuiv();
 			while(temp != NULL)
 			{
 				std::cout<<*temp<<std::endl;
@@ -97,8 +135,8 @@ void Table::creeListes(Elem &e) ///// A MODIFIER EN UTILISANT POINTEUR SUR FT PO
 	if(tab[i].getOcc())
 	{
 
-		cout<<"rip"<<endl;   /////// ici que ça bug, j'ai essayé de faire une liste chainée assez bizarre 
-		tab[i].setSuiv(e);  /////// nsm, on verra plus tard
+		cout<<"rip"<<endl;  
+		tab[i].setSuiv(e);  
 	}
 	else
 	{
@@ -113,12 +151,51 @@ void Table::creeListes(Elem &e) ///// A MODIFIER EN UTILISANT POINTEUR SUR FT PO
 }
 
 void Table::reHach_lin(Elem& e){
+	unsigned int nb = 1;
+	unsigned int i = (this->*fonctHach)(e);
+	unsigned indice = i; 
+
+	while(tab[indice].getOcc())
+	{
+		if(nb == Taille)
+		{
+			break;
+		}
+		nb++;
+		indice = (indice + 1) % Taille;
+	}
+
+	if(nb != Taille)
+	{
+		tab[indice] = e;
+		nbEssais = nb; 
+	}
 
 }
 
 void Table::reHach_quad(Elem& e){
+	unsigned int nb = 1;
+	unsigned int i = (this->*fonctHach)(e);
+	unsigned indice = i; 
+
+	while(tab[indice].getOcc())
+	{
+		if(nb == Taille)
+		{
+			break;
+		}
+		nb++;
+		indice = (i + (nb - 1)*(nb - 1)) % Taille;
+	}
+
+	if(nb < Taille)
+	{
+		tab[indice] = e;
+		nbEssais = nb; 
+	}
 
 }
+
 
 void Table::doubleHach(Elem& e){
 
@@ -137,6 +214,6 @@ void Table::rempTab()
 	{
 		a.setNum(rand());
 		a.setAge(rand() % 30);
-		(this->*fonctReHach)(a);
+		ajoute(a); 
 	}	
 }
