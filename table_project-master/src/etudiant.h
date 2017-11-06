@@ -3,21 +3,27 @@
 
 #include <iostream>
 
+
+// struct Cell{
+// 	Etudiant info; 
+// 	Cell *suivant;
+// };
+
+
 class Etudiant{
 
 private:
-
 	unsigned int num;
 	int age;
 
-	bool occ; //booleen pour la verification de la disponibilité d'une cellule du tableau
-	unsigned int nbEssais;
+	bool occ; //booleen pour la férification de l'occupation du tableau
 
-	Etudiant* suiv;
+	Etudiant* suiv; 
+
+	unsigned int nbEssais;
 
 public: 
 
-	/* Constructeurs & Destructeurs */
 	Etudiant(); 
 	~Etudiant();
 
@@ -25,21 +31,19 @@ public:
 
 	Etudiant(unsigned int a, unsigned int b);
 
-	/* Operateurs */
-
 	friend bool operator==(Etudiant const& lhs,Etudiant const& rhs); 	
 
 	Etudiant& operator=(const Etudiant& etu);
 
 	friend std::ostream &operator<<(std::ostream &flux, Etudiant const& etu);
 
-	/* Fonctions diverses */
+	unsigned int getNum() const;
 
-	void remp_etu();
+	bool isEmpty() const { return (0 == num && 0 == age && nbEssais == 0); };
 
-	bool isEmpty() const { return (0 == num && 0 == age && nbEssais == 0); }
+	unsigned int getAge() const;
 
-	/* Getteurs & Setteurs */
+	bool getOcc() const;
 
 	Etudiant* getSuiv() const;
 
@@ -55,10 +59,12 @@ public:
 
 	void setOcc(bool b);
 
-	unsigned int getNum() const;
-
-	unsigned int getAge() const;
-
-	bool getOcc() const;
+	void remp_etu();
 };
+
+
+
+
+
+
 #endif
