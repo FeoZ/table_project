@@ -1,0 +1,5 @@
+
+table_project-master/CMakeLists.txt
+
+table_project-master/.idea/*
+table_project-master/cmake-build-debug/*
