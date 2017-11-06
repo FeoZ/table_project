@@ -60,16 +60,15 @@ unsigned int Table::ft_hach_2(Elem etu)
 {
 	unsigned int x = etu.getNum() % Taille;
 	x = sqrt((Taille - x)* (Taille - x));  
-	return x; 
-
+	return x;
 }
 
 
 bool Table::recherche(const Elem& e) const // A AMELIORER, temps linéaire et non constant
 {
 	unsigned int cle = e.getNum(); 
-	unsigned int i; 
-	
+	unsigned int i;
+
 	Etudiant* temp;
 
 	for(i = 0; i < Taille; i++)
@@ -107,7 +106,6 @@ void Table::ajoute(Elem &e)
 	}
 }
 
-
 void Table::affiche_tab() const //A MODIFIER POUR AFF LA LISTE DERRIERE
 {
 	unsigned int i;
@@ -116,22 +114,24 @@ void Table::affiche_tab() const //A MODIFIER POUR AFF LA LISTE DERRIERE
 	std::cout<<"========================================================"<<endl; 
 	std::cout<<"			TABLEAU								"<<endl;
 	std::cout<<"========================================================"<<endl;
-	std::cout<<endl; 
+	std::cout<<endl;
+
 	for(i = 0; i < Taille; i++)
 	{
 		if(tab[i].getOcc())
 		{
-			std::cout<<"Case : "<<i<<" :"<<std::endl<<tab[i]<<std::endl; 
+			std::cout << "Case " << i << " : "<< std::endl <<tab[i] << std::endl;
 			temp = tab[i].getSuiv();
 			while(temp != NULL)
 			{
-				std::cout<<*temp<<std::endl;
+				std::cout<< *temp <<std::endl;
 				temp = temp->getSuiv(); 
 			}
 			std::cout<<std::endl;
 		}
 
 	}
+
 	std::cout<<"========================================================"<<endl; 
 	std::cout<<"		    FIN TABLEAU							"<<endl;
 	std::cout<<"========================================================"<<endl;
@@ -144,7 +144,6 @@ void Table::creeListes(Elem &e) ///// A MODIFIER EN UTILISANT POINTEUR SUR FT PO
 	unsigned int i; 
 	i = (this->*fonctHach)(e);
 
-	
 	if(tab[i].getOcc())
 	{
 
@@ -157,9 +156,7 @@ void Table::creeListes(Elem &e) ///// A MODIFIER EN UTILISANT POINTEUR SUR FT PO
 		cout<<tab[i]<<endl;	
 	}
 
-	std::cout<<"done"<<std::endl; 
-
-
+	std::cout << "done" << std::endl;
 
 }
 
@@ -176,13 +173,12 @@ void Table::reHach_lin(Elem& e){
 		}
 		nb++;
 		indice = (indice + 1) % Taille;
-
 	}
 
 	if(nb != Taille)
 	{
 		tab[indice] = e;
-		cout<<"yo 1"<<endl;
+		cout<<"ajout : OK"<<endl;
 		e.setNbEssais(nb); 
 	}
 
@@ -237,18 +233,79 @@ void Table::doubleHach(Elem& e){
 } 
 
 
-
-
-
 void Table::rempTab()
 {
 	srand(time(NULL));
 	int i;
 	Etudiant a (rand(), rand() % 30);  
-	for(i = 0; i < 100; i++)
+	for(i = 0; i < 10; i++)
 	{
 		a.setNum(rand());
 		a.setAge(rand() % 30);
 		ajoute(a); 
-	}	
+	}
 }
+
+
+void Table::supprimer(Elem &e) {
+
+	if(this->size() != 0) { // Si la table n'est pas vide, sinon inutile
+		int num = e.getNum();
+		unsigned int position = (this->*fonctHach)(e);
+
+		if(tab[position].getNum() == num) {
+			tab[position].setOcc(true);
+		}
+	}
+}
+
+bool Table::recherche2(const Elem &e) {
+
+	if (this->size() != 0) { // Si la table n'est pas vide, sinon inutile
+		int num = e.getNum();
+		unsigned int position = (this->*fonctHach)(e);
+
+		std::cout << "Position initiale de l'objet selon la fonction de hachage courante : " << position << std::endl;
+
+		if (position == 0) {
+			return false;
+		}
+
+		/* ReHachage Lineaire */
+		if (fonctReHach == listeFonctionsReHachage[1]) {
+
+			// Tant que les valeurs des elements ne sont pas identiques
+			while (position <= this->size()) {
+				if (tab[position].getNum() == num) {
+					std::cout << "La case est trouvée, position : " << position << std::endl;
+					return true;
+				}
+				if (tab[position].isEmpty()) {
+					std::cout << "La case est vide, position : " << position << std::endl;
+					return false;
+				}
+				if (tab[position].getOcc() == true) { // Si la case est libérée
+					std::cout << "La case est libérée, position : " << position << std::endl;
+				}
+				position = (position + 1);
+			}
+			//std::cout << "L'élement se trouve à la position : " << position << std::endl;
+		}
+
+		/* ReHachage Quadratique */
+		if(fonctReHach == listeFonctionsReHachage[2]){
+			int nb = 1;
+			while (tab[position].getNum() != num && position <= this->size())
+				if(tab[position].getOcc() == true || tab[position].isEmpty()) {
+					std::cout << "La case est vide, position : " << position << std::endl;
+					return false;
+				}
+			nb++;
+			position = (position + (nb - 1)*(nb - 1));
+		}
+		std::cout << "L'élement se trouve à la position : " << position << std::endl;
+		return true;
+	}
+}
+
+
