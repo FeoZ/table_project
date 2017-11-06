@@ -3,6 +3,8 @@
 #include "table.h"
 #include "time.h"
 #include "stdlib.h"
+#include <string>
+#include <math.h>
 
 
 using namespace std;
@@ -12,7 +14,6 @@ Table::Table()
 {
 	tab = new Elem[Taille];
 	demande();
-	nbEssais = 0;
 }
 
 Table::~Table()
@@ -28,9 +29,10 @@ void Table::demande()
 	do{
 	cout<<"Choisissez votre fonction de hachage"<<endl;
 	cout<<"1 pour fonction de hachage pas modulo"<<endl;
+	cout<<"2 pour fonction de hachage par addition ascii"<<endl; 
 	cin>>choixFt;
 
-	}while(choixFt < 1 or choixFt > 1);
+	}while(choixFt < 1 or choixFt > 2);
 
 	do{
 	cout<<"Choisissez quelle gestion des collisions utiliser"<<endl;
@@ -51,6 +53,15 @@ unsigned int Table::ft_hach_1(Elem etu)
 {
 	unsigned int x = etu.getNum() % Taille;
 	return x; 
+}
+
+
+unsigned int Table::ft_hach_2(Elem etu)
+{
+	unsigned int x = etu.getNum() % Taille;
+	x = sqrt((Taille - x)* (Taille - x));  
+	return x; 
+
 }
 
 
@@ -165,12 +176,14 @@ void Table::reHach_lin(Elem& e){
 		}
 		nb++;
 		indice = (indice + 1) % Taille;
+
 	}
 
 	if(nb != Taille)
 	{
 		tab[indice] = e;
-		nbEssais = nb; 
+		cout<<"yo 1"<<endl;
+		e.setNbEssais(nb); 
 	}
 
 }
@@ -193,13 +206,33 @@ void Table::reHach_quad(Elem& e){
 	if(nb < Taille)
 	{
 		tab[indice] = e;
-		nbEssais = nb; 
+		e.setNbEssais(nb); 
 	}
 
 }
 
 
 void Table::doubleHach(Elem& e){
+	unsigned int nb = 1;
+	unsigned int i = (this->*fonctHach)(e);
+	unsigned int j = ft_hach_2(e); 
+	unsigned indice = i; 
+
+	while(tab[indice].getOcc())
+	{
+		if(nb == Taille)
+		{
+			break;
+		}
+		nb++;
+		indice = (i + j*(nb - 1)) % Taille;
+	}
+
+	if(nb < Taille)
+	{
+		tab[indice] = e;
+		e.setNbEssais(nb); 
+	}
 
 } 
 

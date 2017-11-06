@@ -20,6 +20,8 @@ private:
 
 	Etudiant* suiv; 
 
+	unsigned int nbEssais;
+
 public: 
 
 	Etudiant(); 
@@ -42,6 +44,10 @@ public:
 	bool getOcc() const;
 
 	Etudiant* getSuiv() const;
+
+	unsigned int getNbEssai() const;
+
+	void setNbEssais(unsigned int i); 
 
 	void setSuiv(Etudiant etu);
 

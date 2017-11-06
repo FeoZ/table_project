@@ -10,7 +10,6 @@ private:
 	unsigned int (Table::*fonctHach)(Elem);
 	void (Table::*fonctReHach)(Elem&); 
 
-	unsigned int nbEssais;
 
 
 public:
@@ -37,6 +36,7 @@ public:
 
 	unsigned int ft_hach_1(Elem etu); //hachage par modulo
 
+	unsigned int ft_hach_2(Elem etu); //hachage par addition ASCII
 //=================== gestion collision
 
 	void reHach_lin(Elem& e);
@@ -54,7 +54,7 @@ public:
 
 //	===================== ptr sur ft
 
-	unsigned int (Table::*listeFonctionsHachage[1])(Elem) = {&Table::ft_hach_1};
+	unsigned int (Table::*listeFonctionsHachage[2])(Elem) = {&Table::ft_hach_1, &Table::ft_hach_2};
 	void (Table::*listeFonctionsReHachage[4])(Elem&) = {&Table::creeListes, &Table::reHach_lin, &Table::reHach_quad, &Table::doubleHach};
 
 

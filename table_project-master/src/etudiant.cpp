@@ -9,6 +9,7 @@ Etudiant::Etudiant()
 	num = 0; 
 	age = 0; 
 	// ad = NULL; 	
+	nbEssais = 0; 
 }
 
 Etudiant::~Etudiant(){
@@ -34,7 +35,8 @@ Etudiant::Etudiant(const Etudiant& e)
 	num = e.num;
 	age = e.age;
 	occ = true; 
-	suiv = NULL; 
+	suiv = NULL;
+	nbEssais = e.nbEssais;  
 }
 
 Etudiant::Etudiant(unsigned int a, unsigned int b)
@@ -43,6 +45,7 @@ Etudiant::Etudiant(unsigned int a, unsigned int b)
 	age = b;
 	occ = true;
 	suiv = NULL; 
+	nbEssais = 0; 
 }
 
 
@@ -53,7 +56,7 @@ bool operator==(const Etudiant& lhs, const Etudiant& rhs)
 
 ostream& operator<<(ostream& out, Etudiant const& etu)
 {
-	return out <<"Etudiant : "<<endl << "numero etu : " << etu.num << endl <<"age : " << etu.age <<endl;
+	return out <<"Etudiant : "<<endl << "numero etu : " << etu.num << endl <<"age : " << etu.age <<endl << "Nb Essais avant insertion : " << etu.nbEssais<<endl;;
 }
 
 unsigned int Etudiant::getNum() const 
@@ -64,6 +67,11 @@ unsigned int Etudiant::getNum() const
 bool Etudiant::getOcc() const
 {
 	return occ;
+}
+
+unsigned int Etudiant::getNbEssai() const
+{
+	return nbEssais;
 }
 
 
@@ -77,6 +85,10 @@ Etudiant* Etudiant::getSuiv() const
 	return suiv;
 }
 
+void Etudiant::setNbEssais(unsigned int i)
+{
+	nbEssais = i; 
+}
 
 void Etudiant::remp_etu()
 {
@@ -94,6 +106,7 @@ Etudiant& Etudiant::operator=(const Etudiant& etu)
 	age = etu.getAge();
 	occ = true; 
 	suiv = NULL; 
+	nbEssais = etu.getNbEssai();
 
 	return (*this);
 
