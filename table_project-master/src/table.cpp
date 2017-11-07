@@ -84,9 +84,29 @@ bool Table::recherche(const Elem& e)
 		unsigned int tampon = num; 
 		unsigned int position = (this->*fonctHach)(e);
 
-//		std::cout << "Position initiale de l'objet selon la fonction de hachage courante : " << position << std::endl;
+//		std::cout << "Position initiale de l'objet selon ltab[ia fonction de hachage courante : " << position << std::endl;
 		if (fonctReHach == listeFonctionsReHachage[0]) {
-			return false;		
+			if(tab[position].getOcc())
+			{ 
+				if(tab[position].getNum() == num)
+				{
+					return true;
+				}
+				Elem* temp = tab[position].getSuiv();
+				while(temp!= NULL)
+				{
+					if(temp->getNum() == num)
+					{
+						return true;
+					}
+					temp = temp->getSuiv();
+				}
+				return false;  
+			}
+			else
+			{
+				return false;
+			}		
 		}
 
 
@@ -208,7 +228,6 @@ void Table::creeListes(Elem &e)
 {
 	unsigned int i; 
 	i = (this->*fonctHach)(e);
-
 	
 	if(tab[i].getOcc())
 	{
